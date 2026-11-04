@@ -1,6 +1,6 @@
 # Trabalho jogo Pacman em Assembly
 Trabalho na linguagem assembly (link para apresentação:https://youtu.be/I6nawJaza4U?is=p3_5h2Y00fKaRiWZ)RISC (load/store 16 bits) para a matéria **SSC0955 - Introdução a Sistemas Computacionais** 
-## Feito pelos alunos: Vitor Dias (Número usp: 16971111) e Adryann Olivatti (Número usp: 17363240) 
+## Feito pelos alunos: Vitor Dias e Adryann Olivatti (Número usp: 17363240) 
 Criamos o jogo do pacman do zero e fizemos a função sound r0,r1,r2 para o simulador  
 Para a informação de como executar o simulador, vá no manualSimulador e utiliza das instruçoes, o material para baixar o simulador está em install_packages, para fazer um jogo cria um arquivo.asm e fala pro montador transformar em arquivo.mif , o criador do simulado é o professor da USP-ICMC Simoes , cujo github é 
 https://github.com/simoesusp , segue as fotos abaixo do meu projeto:
