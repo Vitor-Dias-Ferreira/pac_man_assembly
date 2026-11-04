@@ -1,46 +1,63 @@
-# Trabalho jogo Pacman em Assembly
-Trabalho na linguagem assembly (link para apresentação:https://youtu.be/I6nawJaza4U?is=p3_5h2Y00fKaRiWZ)RISC (load/store 16 bits) para a matéria **SSC0955 - Introdução a Sistemas Computacionais** 
-## Feito pelos alunos: Vitor Dias e Adryann Olivatti 
-Criamos o jogo do pacman do zero e fizemos a função sound r0,r1,r2 para o simulador  
-Para a informação de como executar o simulador, vá no manualSimulador e utiliza das instruçoes, o material para baixar o simulador está em install_packages, para fazer um jogo cria um arquivo.asm e fala pro montador transformar em arquivo.mif , o criador do simulado é o professor da USP-ICMC Simoes , cujo github é 
-https://github.com/simoesusp , segue as fotos abaixo do meu projeto:
+# Pac-Man in Assembly
 
-## 🎵 Geração de Áudio 
+A Pac-Man-style game written from scratch in assembly for a 16-bit load/store RISC processor, created for the course **SSC0955 - Introduction to Computer Systems** at the University of São Paulo (ICMC-USP).
 
-Para gerar a melodia das notas em Assembly sem estourar o buffer e evitar o travamento do processador (já que a instrução de áudio é bloqueante), utilizamos Engenharia de Prompt com Inteligência Artificial para mapear as frequências e as durações das notas.
+> **Language note:** this was a university assignment in Brazil, so the game's on-screen text and the code comments are in Portuguese. The code was kept as submitted.
 
-O esqueleto do prompt utilizado para a automação das melodias foi o seguinte:
+**Team:** Vitor Dias and Adryann Olivatti
+
+**Presentation video:** [watch on YouTube](https://youtu.be/I6nawJaza4U?is=p3_5h2Y00fKaRiWZ)
+
+## What we built
+
+- The complete game, written from scratch in assembly.
+- A `sound r0, r1, r2` instruction for the simulator, used to add music to the game.
+
+## How to run it
+
+The game runs on the ICMC processor simulator created by Prof. Simões (ICMC-USP), which is not included in this repository. See [his GitHub](https://github.com/simoesusp) for the simulator.
+
+To build a game, write an `.asm` file and use the assembler to convert it into a `.mif` file. In this repository, `pacman.asm` is the source code, and `pacman.mif` and `charmap.mif` are the memory files.
+
+## Audio generation
+
+The audio instruction is blocking, so long notes would freeze the game. To write the melodies without overflowing the buffer or stalling the processor, we used AI-assisted prompting to map note frequencies and durations.
+
+This is the prompt template we used, translated from Portuguese:
 
 ```text
-Aja como um especialista em teoria musical e programação de baixo nível. 
-Sua tarefa é transcrever uma melodia conhecida para a linguagem Assembly de um processador acadêmico customizado de 16 bits (Processador ICMC).
+Act as an expert in music theory and low-level programming.
+Your task is to transcribe a well-known melody into the assembly language of a custom 16-bit academic processor (the ICMC Processor).
 
-### REGRAS DO HARDWARE:
-1. O simulador possui uma instrução de som com a exata sintaxe: `SOUND Rx, Ry, Rz`
-2. Os parâmetros são:
-   - Rx = Frequência da nota em Hertz (Hz).
-   - Ry = Duração da nota em milissegundos (ms).
-   - Rz = Tipo de onda (0 = senoide, 1 = quadrada, 2 = triangular, 3 = dente de serra).
-3. A instrução SOUND é BLOQUEANTE. Portanto, para o jogo não travar, as durações em (Ry) devem ser extremamente curtas, preferencialmente entre 80ms e 150ms no máximo.
+### HARDWARE RULES:
+1. The simulator has a sound instruction with this exact syntax: `SOUND Rx, Ry, Rz`
+2. The parameters are:
+   - Rx = Note frequency in hertz (Hz).
+   - Ry = Note duration in milliseconds (ms).
+   - Rz = Wave type (0 = sine, 1 = square, 2 = triangle, 3 = sawtooth).
+3. The SOUND instruction is BLOCKING. To keep the game from freezing, the durations in Ry must be extremely short, preferably between 80 ms and 150 ms at most.
 
-### ESTRUTURA DO CÓDIGO:
-- Crie uma sub-rotina com um nome descritivo (ex: TocaMusicaIntro:).
-- Faça o push/pop dos registradores usados (r0, r1, r2) no início e fim da sub-rotina.
-- Carregue o valor da onda (Rz) apenas uma vez no topo, para economizar instruções.
-- Use `loadn r0, #<frequencia>` e `loadn r1, #<duracao>` antes de chamar o `SOUND r0, r1, r2` para cada nota.
+### CODE STRUCTURE:
+- Create a subroutine with a descriptive name (e.g., PlayIntroMusic:).
+- Push and pop the registers used (r0, r1, r2) at the start and end of the subroutine.
+- Load the wave value (Rz) only once at the top to save instructions.
+- Use `loadn r0, #<frequency>` and `loadn r1, #<duration>` before calling `SOUND r0, r1, r2` for each note.
 ```
 
-## Tela inicial:
-<img width="651" height="489" alt="Screenshot from 2026-04-22 15-27-16" src="https://github.com/user-attachments/assets/af7eb531-6227-4688-9c14-018bba248bde" />
+## Screenshots
 
-## game over:
+### Start screen
 
-<img width="651" height="489" alt="Screenshot from 2026-04-22 15-27-27" src="https://github.com/user-attachments/assets/7d8fe8f7-804d-482e-94f4-61aa9ab85e70" />
+<img width="651" height="489" alt="Game start screen" src="https://github.com/user-attachments/assets/af7eb531-6227-4688-9c14-018bba248bde" />
 
-## Fantasmas que podem ser atacados:
+### Game over
 
-<img width="651" height="489" alt="Screenshot from 2026-04-22 15-27-42" src="https://github.com/user-attachments/assets/51a3c6ff-40ed-4336-abfb-a2f7b2203d10" />
+<img width="651" height="489" alt="Game over screen" src="https://github.com/user-attachments/assets/7d8fe8f7-804d-482e-94f4-61aa9ab85e70" />
 
-## Tela de você venceu:
+### Ghosts that can be attacked
 
-<img width="651" height="489" alt="Screenshot from 2026-04-22 15-30-17" src="https://github.com/user-attachments/assets/3643d56f-33b2-4559-9f64-610fb693ec99" />
+<img width="651" height="489" alt="Gameplay with ghosts that can be attacked" src="https://github.com/user-attachments/assets/51a3c6ff-40ed-4336-abfb-a2f7b2203d10" />
+
+### Win screen
+
+<img width="651" height="489" alt="Win screen" src="https://github.com/user-attachments/assets/3643d56f-33b2-4559-9f64-610fb693ec99" />
